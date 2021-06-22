@@ -37,6 +37,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jetbrains.annotations.NotNull;
 import thedarkcolour.futuremc.api.BeePollinationHandler;
 import thedarkcolour.futuremc.api.BeePollinationHandlerJVM;
+import thedarkcolour.futuremc.entity.bee.ai.GoToEntityAI;
 import thedarkcolour.futuremc.registry.FSounds;
 import thedarkcolour.futuremc.tile.BeeHiveTile;
 
@@ -100,6 +101,7 @@ public class EntityBee extends EntityAnimal implements EntityFlying {
         tasks.addTask(6, new AIMoveToFlower(this));
         tasks.addTask(7, new AIGrowCrops(this));
         tasks.addTask(8, new AIWander(this));
+        tasks.addTask(9, new GoToEntityAI(this));
         targetTasks.addTask(1, new AIRevenge(this));
         targetTasks.addTask(2, new AIFollowTarget(this));
     }

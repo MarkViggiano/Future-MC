@@ -57,6 +57,7 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
     var hivePos: BlockPos? = null
     var pollinateAI: PollinateAI? = null
     lateinit var goToHiveAI: GoToHiveAI
+    private var attackEntity: Entity? = null
 
     init {
         moveHelper = FlyHelper(this)
@@ -74,6 +75,10 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
 
     fun getBlockPathWeightD(pos: BlockPos): Double {
         return if (world.isAir(pos)) 10.0 else 0.0
+    }
+
+    fun hasEntityToAttack() : Boolean {
+        return this.attackEntity == null;
     }
 
     override fun initEntityAI() {
@@ -151,6 +156,7 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
     }
 
     override fun attackEntityAsMob(entityIn: Entity): Boolean {
+        this.attackEntity = entityIn;
         val flag = entityIn.attackEntityFrom(
             causeBeeDamage(this),
             this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).attributeValue.toFloat()
@@ -174,6 +180,7 @@ class BeeEntity(worldIn: World) : EntityAnimal(worldIn), EntityFlying {
 
             setHasStung(true)
             attackTarget = null
+            this.attackEntity = null;
             playSound(FSounds.BEE_STING, 1.0f, 1.0f)
         }
 
